@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">SmallRedBookImitate</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="homepage">首页</string>
+    <string name="video">视频</string>
+    <string name="message">消息</string>
+    <string name="my">我</string>
+</resources>
