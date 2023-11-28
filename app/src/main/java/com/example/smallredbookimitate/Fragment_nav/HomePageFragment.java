@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.example.smallredbookimitate.Adapter.TabAdapter;
 import com.example.smallredbookimitate.Fragment_toolbar.FindFragment;
 import com.example.smallredbookimitate.Fragment_toolbar.FollowedFragment;
 import com.example.smallredbookimitate.Fragment_toolbar.LocalFragment;
@@ -27,7 +26,6 @@ public class HomePageFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
-    private TabAdapter tabAdapter;
     private List<Fragment> fragments;
     private List<String> tabs;
 
@@ -58,6 +56,7 @@ public class HomePageFragment extends Fragment {
         tabs.add("西安");
         MyAdapter adapter = new MyAdapter(requireActivity(), fragments);
         viewPager.setAdapter(adapter);
+        //将tab和viewpager关联起来
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> tab.setText(tabs.get(position))).attach();
         return view;
     }

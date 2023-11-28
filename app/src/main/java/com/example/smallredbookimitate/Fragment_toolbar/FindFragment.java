@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.example.smallredbookimitate.Adapter.CardAdapter;
 import com.example.smallredbookimitate.R;
@@ -21,6 +22,7 @@ import java.util.Random;
 public class FindFragment extends Fragment {
 
     private static final String TAG = "FindFragment";
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     private Card[] cards = {new Card(R.drawable.image01, R.drawable.headimage01, "小卢快跑", "这是文章1这是文章1这是文章1这是文章1", 1212),
             new Card(R.drawable.image02, R.drawable.headimage02, "小马不怕跌倒", "这是文章2这是文章2这是文章2", 520),
@@ -42,7 +44,13 @@ public class FindFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new CardAdapter(cardList);
         recyclerView.setAdapter(adapter);
-
+        swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swiperefresh);
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshItem();
+            }
+        });
 
 
         return view;
@@ -55,5 +63,26 @@ public class FindFragment extends Fragment {
             int index = random.nextInt(4);
             cardList.add(cards[index]);
         }
+    }
+
+    private void refreshItem(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        initCards();
+                        adapter.notifyDataSetChanged();
+                        swipeRefreshLayout.setRefreshing(false);
+                    }
+                });
+            }
+        }).start();
     }
 }
